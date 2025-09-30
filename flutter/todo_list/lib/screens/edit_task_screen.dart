@@ -3,24 +3,33 @@ import 'package:google_fonts/google_fonts.dart';
 import '../models/task.dart';
 import '../utils/formatters.dart';
 
-class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+class EditTaskScreen extends StatefulWidget {
+  final Task task;
+  
+  const EditTaskScreen({super.key, required this.task});
+  
   @override
-  State<AddTaskScreen> createState() => _AddTaskScreenState();
+  State<EditTaskScreen> createState() => _EditTaskScreenState();
 }
 
-class _AddTaskScreenState extends State<AddTaskScreen> with SingleTickerProviderStateMixin {
-  final _titleController = TextEditingController();
-  final _notesController = TextEditingController();
+class _EditTaskScreenState extends State<EditTaskScreen> with SingleTickerProviderStateMixin {
+  late TextEditingController _titleController;
+  late TextEditingController _notesController;
   DateTime? _date;
   TimeOfDay? _time;
-  String _category = 'Other';
+  late String _category;
   final List<String> _categories = ['Other', 'Home', 'Shopping', 'Work', 'Fitness'];
   late AnimationController _animController;
 
   @override
   void initState() {
     super.initState();
+    _titleController = TextEditingController(text: widget.task.title);
+    _notesController = TextEditingController(text: widget.task.notes);
+    _date = widget.task.date;
+    _time = widget.task.time;
+    _category = widget.task.category;
+    
     _animController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 600),
@@ -40,7 +49,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> with SingleTickerProvider
     final now = DateTime.now();
     final picked = await showDatePicker(
       context: context,
-      initialDate: now,
+      initialDate: _date ?? now,
       firstDate: now.subtract(const Duration(days: 365)),
       lastDate: now.add(const Duration(days: 365)),
       builder: (context, child) {
@@ -60,7 +69,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> with SingleTickerProvider
   Future<void> _pickTime() async {
     final picked = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: _time ?? TimeOfDay.now(),
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -74,6 +83,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> with SingleTickerProvider
     );
     if (picked != null) setState(() => _time = picked);
   }
+
+  void _clearDate() => setState(() => _date = null);
+  void _clearTime() => setState(() => _time = null);
 
   void _save() {
     final title = _titleController.text.trim();
@@ -91,14 +103,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> with SingleTickerProvider
       );
       return;
     }
-    final task = Task(
-      title: title,
-      notes: _notesController.text.trim(),
-      date: _date,
-      time: _time,
-      category: _category,
-    );
-    Navigator.of(context).pop(task);
+    
+    // Update the task object
+    widget.task.title = title;
+    widget.task.notes = _notesController.text.trim();
+    widget.task.date = _date;
+    widget.task.time = _time;
+    widget.task.category = _category;
+    
+    Navigator.of(context).pop(true); // Return true to indicate task was updated
   }
 
   @override
@@ -108,7 +121,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> with SingleTickerProvider
       backgroundColor: const Color(0xFFF8F9FA),
       appBar: AppBar(
         title: Text(
-          'Add New Task',
+          'Edit Task',
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontSize: 20,
@@ -237,6 +250,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> with SingleTickerProvider
                       label: _date == null ? 'Select Date' : formattedDate(_date!),
                       onTap: _pickDate,
                       isSelected: _date != null,
+                      onClear: _date != null ? _clearDate : null,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -246,6 +260,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> with SingleTickerProvider
                       label: _time == null ? 'Select Time' : _time!.format(context),
                       onTap: _pickTime,
                       isSelected: _time != null,
+                      onClear: _time != null ? _clearTime : null,
                     ),
                   ),
                 ],
@@ -292,7 +307,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> with SingleTickerProvider
                       const Icon(Icons.check_circle_rounded, color: Colors.white, size: 24),
                       const SizedBox(width: 12),
                       Text(
-                        'Save Task',
+                        'Update Task',
                         style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontSize: 18,
@@ -333,12 +348,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> with SingleTickerProvider
     required String label,
     required VoidCallback onTap,
     required bool isSelected,
+    VoidCallback? onClear,
   }) {
     final seed = Theme.of(context).colorScheme.primary;
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
         decoration: BoxDecoration(
           color: isSelected ? seed.withOpacity(0.1) : Colors.white,
           borderRadius: BorderRadius.circular(14),
@@ -363,6 +379,17 @@ class _AddTaskScreenState extends State<AddTaskScreen> with SingleTickerProvider
                 overflow: TextOverflow.ellipsis,
               ),
             ),
+            if (onClear != null) ...[
+              const SizedBox(width: 4),
+              GestureDetector(
+                onTap: onClear,
+                child: Icon(
+                  Icons.close,
+                  size: 16,
+                  color: seed,
+                ),
+              ),
+            ],
           ],
         ),
       ),

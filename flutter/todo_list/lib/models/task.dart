@@ -10,7 +10,7 @@ class Task {
     this.isDone = false,
   });
 
-  final String title;
+  String title;
   String notes;
   DateTime? date;
   TimeOfDay? time;
