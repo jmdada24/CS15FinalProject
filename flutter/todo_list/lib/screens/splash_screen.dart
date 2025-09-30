@@ -213,7 +213,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
-                            'by Binignit bois',
+                            'by Binignit Bois',
                             style: GoogleFonts.poppins(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
