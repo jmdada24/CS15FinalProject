@@ -7,7 +7,7 @@ from PyQt5.QtCore import Qt, QDateTime
 from PyQt5.QtGui import QFont
 
 
-# -------- Custom widget for list item -------- #
+#  Custom widget for list item 
 class ListItemWidget(QFrame):
     def __init__(self, name, date, delete_callback):
         super().__init__()
@@ -17,7 +17,6 @@ class ListItemWidget(QFrame):
         layout = QHBoxLayout()
         layout.setContentsMargins(5, 5, 5, 5)
 
-        # Left side (name + date stacked vertically)
         text_layout = QVBoxLayout()
         self.name_label = QLabel(name)
         self.name_label.setFont(QFont("Segoe UI Variable", 18, QFont.Bold))
@@ -30,7 +29,6 @@ class ListItemWidget(QFrame):
         text_layout.addWidget(self.name_label)
         text_layout.addWidget(self.date_label)
 
-        # Right side (Delete button)
         self.del_btn = QPushButton("Delete")
         self.del_btn.setFont(QFont("Segoe UI Variable", 11))
         self.del_btn.setFixedWidth(80)
@@ -46,7 +44,7 @@ class ListItemWidget(QFrame):
         self.delete_callback(self.name)
 
 
-# -------- Task Window (tasks inside a list) -------- #
+# Task Window (tasks inside a list)
 class TaskWindow(QWidget):
     def __init__(self, list_name, tasks, parent):
         super().__init__()
@@ -64,8 +62,10 @@ class TaskWindow(QWidget):
         title.setStyleSheet("color: #ffffff;")
         layout.addWidget(title)
 
+        #list of tasks
         self.task_list = QListWidget()
         self.task_list.setStyleSheet("font-size: 16px; color: #ffffff;")
+        #display existing tasks
         for task in tasks:
             self.task_list.addItem(task)
         layout.addWidget(self.task_list)
@@ -110,7 +110,7 @@ class TaskWindow(QWidget):
         self.parent.show()
 
 
-# -------- Main Window (list of lists) -------- #
+# Main Window
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -180,6 +180,7 @@ class MainWindow(QWidget):
 
         self.setLayout(layout)
 
+    #ccreate new list (set of tasks)
     def create_list(self):
         name = self.list_input.text().strip()
         if name:
@@ -215,7 +216,7 @@ class MainWindow(QWidget):
                     break
 
 
-# -------- Run App -------- #
+#Run App 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
