@@ -1,9 +1,10 @@
 from PyQt5.QtWidgets import (
-  QMainWindow, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QLabel, QSizePolicy
+  QMainWindow, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QLabel, QSizePolicy, QStackedWidget
 )
 from PyQt5.QtCore import Qt, QDateTime, QTimer, QTime
 from todoLists import TodoLists
 from listspanel import ListPanel
+from addlistpanel import AddlistPanel
 
 class MainWindow(QMainWindow):
   def __init__(self):
@@ -19,12 +20,12 @@ class MainWindow(QMainWindow):
 
     mainPanelLayout = QVBoxLayout()
     headerLayout = QVBoxLayout()
-    BodyLayout = QVBoxLayout()
+    bodyLayout = QVBoxLayout()
     footerLayout = QHBoxLayout()
 
     mainPanel.setLayout(mainPanelLayout)
     header.setLayout(headerLayout)
-    self.body.setLayout(BodyLayout)
+    self.body.setLayout(bodyLayout)
     footer.setLayout(footerLayout)
 
     mainPanel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -64,14 +65,18 @@ class MainWindow(QMainWindow):
       font-family: 'Arial';
     """)
 
-    contentPanel = QWidget()
-    contentPanelLayout = QVBoxLayout()
-    contentPanel.setLayout(contentPanelLayout)
-    contentPanel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-    contentPanel.setStyleSheet("""
+    self.tempWidget = QStackedWidget()
+    self.tempWidget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+    self.contentPanel = QWidget()
+    self.contentPanelLayout = QVBoxLayout()
+    self.contentPanel.setLayout(self.contentPanelLayout)
+    self.contentPanel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+    self.contentPanel.setStyleSheet("""
       background-color: rgb(245, 245, 245);
     """)
-    self.body.layout().addWidget(contentPanel)
+    self.tempWidget.addWidget(self.contentPanel)
+    bodyLayout.addWidget(self.tempWidget)
 
     addButton = QPushButton("Add")
     addButton.setFixedSize(100, 40)
@@ -83,8 +88,8 @@ class MainWindow(QMainWindow):
       padding: 10px 20px;
       border-radius: 10px;
     """)
-    contentPanelLayout.addWidget(addButton, alignment=Qt.AlignCenter)
-    addButton.clicked.connect()
+    self.contentPanel.layout().addWidget(addButton, alignment=Qt.AlignCenter)
+    addButton.clicked.connect(self.add_list)
 
     footer.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)  
     footer.setFixedHeight(60)
@@ -104,7 +109,7 @@ class MainWindow(QMainWindow):
     lists = TodoLists()
 
     if lists.get_lists():
-      self.set_body_newPanel(ListPanel())
+      self.tempWidget.setCurrentWidget(ListPanel())
     
   def _update_date(self):
     now = QDateTime.currentDateTime()
@@ -116,20 +121,16 @@ class MainWindow(QMainWindow):
     midnight = QTime(0, 0)
     msecs_until_midnight = now.msecsTo(midnight.addSecs(24 * 60 * 60))
 
-    QTimer.singleShot(msecs_until_midnight, self.update_and_reschedule)
+    QTimer.singleShot(msecs_until_midnight, self._update_and_reschedule)
 
   def _update_and_reschedule(self):
     self._update_date()
     self._schedule_midnight_update()
 
-  def set_body_newPanel(self, new_body):
-    self.body.layout().deleteLater()  # Remove old layout
-    self.body.setLayout(QVBoxLayout())  # Set new layout
-    self.body.layout().addWidget(new_body)  # Add new body widget
-
   def add_list(self):
-    self.set_body_newPanel(ListPanel())  # Placeholder for actual implementation
-  
+    panel = AddlistPanel()
+    self.tempWidget.addWidget(panel)
+    self.tempWidget.setCurrentWidget(panel)
 
 
   
