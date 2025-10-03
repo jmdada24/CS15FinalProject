@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/task.dart';
 import '../utils/formatters.dart';
 import '../widgets/task_card.dart';
+import '../services/task_storage.dart';
 import 'add_task_screen.dart';
 import 'edit_task_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +15,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final List<Task> _tasks = [];
+  final TaskStorage _storage = TaskStorage();
   late AnimationController _fabController;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -23,6 +26,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 200),
     );
+    _loadTasks();
+  }
+
+  /// Load tasks from storage on app start
+  Future<void> _loadTasks() async {
+    final tasks = await _storage.loadTasks();
+    setState(() {
+      _tasks.clear();
+      _tasks.addAll(tasks);
+      _isLoading = false;
+    });
   }
 
   @override
@@ -46,11 +60,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
     if (newTask != null) {
       setState(() => _tasks.insert(0, newTask));
+      await _storage.createTask(newTask); // Create individual JSON file
     }
   }
 
-  void _toggleDone(int index) => setState(() => _tasks[index].isDone = !_tasks[index].isDone);
-  void _removeTask(int index) => setState(() => _tasks.removeAt(index));
+  void _toggleDone(int index) async {
+    setState(() => _tasks[index].isDone = !_tasks[index].isDone);
+    await _storage.updateTask(_tasks[index]); // Update individual JSON file
+  }
+
+  void _removeTask(int index) async {
+    final taskId = _tasks[index].id;
+    setState(() => _tasks.removeAt(index));
+    await _storage.deleteTask(taskId); // Delete individual JSON file
+  }
 
   Future<void> _editTask(int index) async {
     final task = _tasks[index];
@@ -66,7 +89,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         transitionDuration: const Duration(milliseconds: 400),
       ),
     );
-    if (result == true) setState(() {}); // Refresh UI after edit
+    if (result == true) {
+      setState(() {}); // Refresh UI after edit
+      await _storage.updateTask(task); // Update individual JSON file
+    }
   }
 
   @override
