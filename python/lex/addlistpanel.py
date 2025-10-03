@@ -15,7 +15,7 @@ class AddlistPanel(QWidget):
       font-size: 18px;
       font-weight: bold;
       padding: 10px;
-                            border: 1px
+      border: 1px solid #;
     """)
     main_layout.addWidget(self.line_edit)
 

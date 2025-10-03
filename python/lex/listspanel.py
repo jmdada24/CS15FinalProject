@@ -1,8 +1,9 @@
 from PyQt5.QtWidgets import QWidget
 
 class ListPanel(QWidget):
-  def __init__(self, list_name):
+  def __init__(self):
     super().__init__()
     main_layout = QVBoxLayout()
     self.setLayout(main_layout)
+    
     
