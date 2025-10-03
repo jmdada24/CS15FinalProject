@@ -9,16 +9,27 @@ class AddlistPanel(QWidget):
     main_layout = QVBoxLayout()
     self.setLayout(main_layout)
 
-    self.title = QLineEdit()
-    self.title.setPlaceholderText("Enter list name")
-    self.title.setStyleSheet("""                        
+    self.ltitle = QLineEdit()
+    self.ltitle.setPlaceholderText("Enter list name")
+    self.ltitle.setStyleSheet("""                        
       font-size: 18px;
       font-weight: bold;
       padding: 10px;
-      border: 1px solid #;
+      border: 1px solid rgb(113,94,157);
+      border-radius: 5px;
     """)
-    main_layout.addWidget(self.line_edit)
+    main_layout.addWidget(self.ltitle)
 
-    self.descriptio = QTextEdit()
-    self.description.setPlaceholderText("Enter list description")
-    main_layout.addWidget(self.text_edit) 
+    self.txtadescription = QTextEdit()
+    self.txtadescription.setPlaceholderText("Enter list description")
+    self.txtadescription.setStyleSheet("""
+      font-size: 16px;
+      padding: 10px;
+      border: 1px solid rgb(113,94,157);
+      border-radius: 5px;
+    """)
+    main_layout.addWidget(self.txtadescription) 
+
+
+
+
