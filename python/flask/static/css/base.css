@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  padding: 20px 30px;
+  background-color: rgb(133, 63, 163);
+  color: whitesmoke;
+  font: bold calc(18 / 16 * 1rem) Arial;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f5f5;
+}

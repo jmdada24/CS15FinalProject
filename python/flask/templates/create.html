@@ -1,0 +1,40 @@
+{%extends "base.html"%}
+{%block title%}Home{%endblock%}
+{%block styles%}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/create.css') }}">
+{%endblock%}
+{%block content%}
+  <header>
+    <div id="headerwrapper">
+      <a href="{{url_for('home.home')}}">
+        <img src="{{ url_for('static', filename='images/left-arrow.png') }}" alt="icon" class="icon">
+      </a>
+    </div>
+    <div id="labelheader">Create List</div>
+  </header>
+  <main>
+    <div id="create-wrapper">
+      <form action="{{url_for('create.submit_list')}}" method="POST">
+        <input id="list_name" name="list_name" placeholder="List Name" required>
+        <div id="category-wrapper">
+          <div class="category-buttons">
+            <input type="radio" name="category" id="personal" value="Personal">
+            <label for="personal">Personal</label>
+
+            <input type="radio" name="category" id="work" value="Work">
+            <label for="work">Work</label>
+
+            <input type="radio" name="category" id="shopping" value="Shopping">
+            <label for="shopping">Shopping</label>
+
+            <input type="radio" name="category" id="others" value="Others">
+            <label for="others">Others</label>
+          </div>
+        </div>
+        <textarea id="description" name="description" placeholder="List Description"></textarea>
+        <button type="submit">Create List</button>
+      </form>
+    </div>
+  </main>
+  
+{%endblock%}

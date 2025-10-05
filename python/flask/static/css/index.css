@@ -1,0 +1,116 @@
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 30px 30px;
+  background-color: whitesmoke;
+}
+
+#lists-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-card {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 20px;
+  margin-bottom: 5px;
+  background-color: white;
+  border: 1px solid rgb(133, 63, 163);
+  border-radius: 20px;
+}
+
+.list-card > a {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-decoration: none;  /* removes underline */
+  color: rgb(133, 63, 163);         /* uses parent text color */
+  font: inherit;  
+  background-color: white;
+}
+
+.list-card > a > h2 {
+  font: bold calc(16/16 * 1rem) Arial;
+}
+
+.list-card > a > p {
+  font: normal calc(14/16 * 1rem) Arial;
+}
+
+.list-card > form {
+  align-content: center;
+  justify-items: center;
+}
+
+.delete{
+  background-color: white;
+  border-style: none;
+  border-radius: 2px;
+  padding: 2px;
+}
+
+.delete > img{
+  width: 16px;
+}
+
+.delete:hover {
+  cursor: pointer;
+}
+
+.delete:active {
+  background-color: rgba(0,0,0,0.2);
+}
+
+#addlistwrapper {
+  padding: 20px 35px;
+}
+
+#add_list {
+  padding: 5px;
+  justify-items: center;
+  width: 100%;
+  background-color: rgb(133, 63, 163);
+  border-style: none;
+  border-radius: 20px;
+}
+
+#add_list > a {
+  text-decoration: none;
+  font: bold calc(18/16 * 1rem) Arial;
+  color: white;
+}
+
+#home-content {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  height: 100%;
+}
+
+#add_firstlistbtn {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: rgb(133, 63, 163);
+  border-style: none;
+  border-radius: 10px;
+}
+
+#add_firstlistbtn :focus{
+  outline: none;
+}
+
+#add_firstlistbtn > a {
+  color: white;
+  text-decoration: none;
+  font: normal normal calc(16/16 * 1rem) Arial;
+}
+
+#add_firstlistbtn:hover,
+#add_firstlistbtn:hover > a {
+  color: rgb(133, 63, 163);
+  background-color: white;
+  border: 1px solid rgb(133, 63, 163) 
+}
