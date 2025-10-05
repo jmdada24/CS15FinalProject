@@ -1,0 +1,160 @@
+header {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 5px;
+}
+
+#upperheader {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 5px;
+}
+
+#headerwrapper > a > img {
+  width: 20px;
+}
+
+#labelheader{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  font: bold calc(18 / 16 * 1rem) Arial;
+}
+
+#lowerheader {
+  padding: 5px;
+  font: bold calc(14 / 16 * 1rem) Arial;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1
+}
+
+#list-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+#upperwrapper {
+  padding: 20px;
+  margin: 6px 7px;
+  background-color: rgb(227, 202, 247);
+  border-radius: 20px;
+  color: rgb(133,63,163);
+  font: italic normal calc(14/16 * 1rem) Arial;
+}
+
+#taskwrap > h2, #completedtaskwrap > h2 {
+  padding: 5px 10px;
+  color: rgb(50, 48, 51);
+  font: 600 calc(18/16 * 1rem) Calibri;
+}
+
+#tasklist, #completedtasklist {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 10px 10px 10px;
+  min-height: 70px;
+  gap: 5px;
+}
+
+.task-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: white;
+  color: rgb(50, 48, 51);
+  font: normal calc(12/16 * 1rem) Arial;
+  box-shadow: 0 4px 6px -7px rgba(0, 0, 0, 0.3);
+  gap: 10px;
+}
+
+.task-card > p {
+  width: 100%;
+}
+
+.task-card > form input[type = checkbox] {
+  width: 12px;
+  height: 12px;
+  accent-color: rgb(133, 63, 163);
+}
+
+.task-card > form > button {
+  padding: 3px;
+  align-content: center;
+  border-radius: 2px;
+  border-style: none;
+  background-color: white;
+}
+
+.task-card > form > button :active {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.task-card > form > button > img {
+  width: 13px;
+}
+
+#tasklist > p, #completedtasklist > p {
+  color: rgb(133,63,163);
+  font: italic normal calc(13/16 * 1rem) Arial;
+}
+
+#completedtaskwrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+} 
+
+#completedtasklist {
+  height: 100%;
+}
+
+#completedtaskwrap > form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 5px;
+}
+
+#completedtaskwrap > form > input[type = text] {
+  padding: 3px;
+  border: 1px solid rgb(133,63,163);
+  border-radius: 7px;
+  color: rgb(50, 48, 51);
+  font: normal calc(12/16 * 1rem) Arial;
+  letter-spacing: 1px;
+}
+
+#completedtaskwrap > form > input[type = text] :focus {
+  outline: none;
+}
+
+#completedtaskwrap > form > button {
+  padding: 3px;
+  border-style: none;
+  border-radius: 7px;
+  background-color: rgb(133,63,163);
+  color: white;
+}
+
+#completedtaskwrap > form > button :active {
+  border: 1px solid rgb(133,63,163);
+  background-color: white;
+  color: rgb(133,63,163);
+}
+
+
+
+
+
+
+
+
+

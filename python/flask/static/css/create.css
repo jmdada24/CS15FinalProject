@@ -1,0 +1,104 @@
+#headerwrapper > a > img {
+  width: 20px;
+}
+
+#labelheader{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  font: bold calc(18 / 16 * 1rem) Arial;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+#create-wrapper > form {
+  display: flex;
+  flex-direction: column;
+}
+
+#list_name {
+  padding: 2px 5px;
+  width: 100%;
+  font: normal calc(14/16 * 1rem) Arial;
+  color: rgb(133,63,163);
+  border: 1px solid rgb(133,63,163);
+  border-radius: 5px;
+}
+
+#list_name:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#list_name::-webkit-input-placeholder {
+  font: normal calc(14/16 * 1rem) Arial;
+}
+
+.category-buttons {
+  display: flex;
+  margin-top: 5px;
+  flex-direction: row;
+  gap: 2px; /* spacing between buttons */
+}
+
+.category-buttons input[type="radio"] {
+  display: none; /* hide actual radio input */
+}
+
+.category-buttons label {
+  flex: 1;                    /* each label takes equal space */
+  text-align: center;          /* center the text */
+  padding: 2px 0;              /* vertical padding */
+  border: 1px solid rgb(133,63,163);
+  border-radius: 5px;
+  cursor: pointer;
+  color: rgb(133,63,163);
+  font: normal calc(13/16 * 1rem) Arial;
+  background-color: white;
+  transition: 0.2s;
+  user-select: none;
+}
+
+.category-buttons input[type="radio"]:checked + label {
+  background-color: rgb(133,63,163);
+  color: white;
+}
+
+#description {
+  box-sizing: border-box;
+  margin-top: 5px;
+  padding: 8px;
+  width: 100%;
+  height: 200px;
+  font: normal calc(13/16 * 1rem) Arial;
+  color: rgb(133,63,163);
+  border-radius: 8px;
+  border: 1px solid rgb(133,63,163);
+  resize: vertical;
+}
+
+#description::-webkit-input-placeholder {
+  font: normal calc(13/16 * 1rem) Arial;
+}
+
+#create-wrapper > form > button {
+  margin-top: 5px;
+  padding: 3px 10px;
+  background-color: rgb(133,63,163);
+  border-radius: 4px;border: 1px solid rgb(133,63,163);
+  font: bold calc(16/16 * 1rem) Arial;
+  color: white;
+}
+
+#create-wrapper > form > button :active {
+  background-color: white;
+  border-color: rgb(133,63,163);
+  color: rgb(133,63,163);
+}
+
+

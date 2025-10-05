@@ -1,0 +1,39 @@
+{%extends "base.html"%}
+{%block title%}Home{%endblock%}
+{%block styles%}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{%endblock%}
+{%block content%}
+  <header>
+    My Todo List
+  </header>
+  <main>
+    {%if todo_lists and todo_lists|length > 0%}
+      <div id="Lists-wrapper">
+        {%for i in range (todo_lists|length)%}
+          <div class="list-card">
+            <a href="{{url_for('list.view_list', list_index=i)}}">
+              <h2>{{ todo_lists[i]["list_name"] }}</h2>
+              <p>{{ todo_lists[i]["category"] }}</p>
+            </a>
+            <form action="{{ url_for('home.delete_list', list_index=i) }}" 
+            method="post"><button type="submit" class="delete">
+              <img src="{{ url_for('static', filename='images/trash-bin.png') }}" alt="icon" class="icon">
+            </button></form>
+          </div>
+        {%endfor%}
+        <div id="addlistwrapper">
+          <button type="button" id="add_list"><a href="{{url_for('create.create_list')}}">
+            Add New List
+          </a></button>
+        </div>
+      </div>
+    {%else%}
+      <div id="home-content">
+        <button type="button" id="add_firstlistbtn"><a href="{{url_for('create.create_list')}}">
+          Add your first todo list!
+        </a></button>
+      </div>
+    {%endif%}
+  </main>
+{%endblock%}

@@ -1,0 +1,23 @@
+{
+    "todo-lists": [
+        {
+            "list_name": "Mag lu2",
+            "category": "Personal",
+            "description": "mag lu2",
+            "tasks": [
+                {
+                    "task": "mag lu2",
+                    "completed": true
+                },
+                {
+                    "task": "mag lu2",
+                    "completed": true
+                },
+                {
+                    "task": "mag lu2",
+                    "completed": false
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,80 @@
+{%extends "base.html"%}
+{%block title%}Lists{%endblock%}
+{%block styles%}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/list.css') }}">
+{%endblock%}
+{%block content%}
+  <header>
+    <div id="upperheader">
+      <div id="headerwrapper">
+        <a href="{{url_for('home.home')}}">
+          <img src="{{ url_for('static', filename='images/left-arrow.png') }}" alt="icon" class="icon">
+        </a>
+      </div>
+    <div id="labelheader">{{ list_name }}</div>
+    </div>
+    <div id="lowerheader">
+      {{ category }}
+    </div>
+  </header>
+  <main>
+    <div id="list-wrapper">
+      <div id="taskwrap">
+        <div id="upperwrapper">
+          <p id="description">{{ description }}</p>
+        </div>
+        <h2>Tasks</h2>
+        <div id="tasklist">
+          {%if tasks and tasks|length > 0%}
+            {%for task in tasks%}
+              {%if not task["completed"]%}
+              <div class="task-card">
+                <p>{{task["task"]}}</p>
+                <form action="{{url_for('list.toggle_task', list_index=list_index, task_index=loop.index0)}}" method="post">
+                  <input 
+                  type="checkbox" 
+                  name="toggle" 
+                  id="toggle"
+                  onchange="this.form.submit()"
+                  {% if task["completed"] %}checked{% endif %}
+                  >
+                </form>
+                <form action="{{ url_for('list.delete_task', list_index=list_index, task_index=loop.index0) }}" 
+                method="post"><button type="submit" class="delete">
+                  <img src="{{ url_for('static', filename='images/trash-bin.png') }}" alt="icon" class="icon">
+                </button></form>
+              </div>
+              {%endif%}
+            {%endfor%}
+          {%else%}
+            <p>No tasks available. Add a new task!</p>
+          {%endif%}
+        </div>
+      </div>
+      <div id="completedtaskwrap">
+        <h2>Completed</h2>
+        <div id="completedtasklist">
+          {%if tasks and tasks|length > 0%}
+            {%for task in tasks%}
+              {%if task["completed"]%}
+              <div class="task-card">
+                <p>{{task["task"]}}</p>
+                <form action="{{ url_for('list.delete_task', list_index=list_index, task_index=loop.index0) }}" 
+                method="post"><button type="submit" class="delete">
+                  <img src="{{ url_for('static', filename='images/trash-bin.png') }}" alt="icon" class="icon">
+                </button></form>
+              </div>
+              {%endif%}
+            {%endfor%}
+          {%else%}
+            <p>No completed tasks.</p>
+          {%endif%}
+        </div>
+      <form action="{{ url_for('list.add_task', list_index=list_index) }}" method="post" id="add_task">   
+        <input type="text" name="new_task">
+        <button type="submit">Add Task</button>
+      </form>
+    </div>  
+  </main>
+  
+{%endblock%}
